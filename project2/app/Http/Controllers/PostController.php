@@ -15,9 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::get();
-
-        return view('blog.index');
+        return view('blog.index', [
+            'posts' => Post::orderBy('updated_at', 'desc')->get()
+        ]);
     }
 
     /**
@@ -49,7 +49,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return $id;
+        $post = Post::findOrFail($id);
+        return view('blog.show', [
+            'post' => $post
+        ]);
     }
 
     /**
